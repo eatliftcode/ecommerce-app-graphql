@@ -1,16 +1,18 @@
-import { products, categories } from "./data.js";
-
 export const resolvers = {
     Query: {
-        products: () => products,
-        product: (parent, args, context) => products.find(x => x.id === args.id),
-        categories: () => categories,
-        category: (parent, args, context) => categories.find(x => x.id === args.id)
+        products: (parent, args, context) => context.products,
+        product: (parent, args, context) => context.products.find(x => x.id === args.id),
+        categories: (parent, args, context) => context.categories,
+        category: (parent, args, context) => context.categories.find(x => x.id === args.id)
     },
     Product: {
         category: (parent, args, context)=> {
-            console.log(parent)
-            return categories.find(x => x.id = parent.id)
+            return context.categories.find(x => x.id = parent.id)
+        }
+    },
+    Category: {
+        products: (parent, args, context)=> {
+            return context.products.filter(x => x.id = parent.id)
         }
     }
 }
