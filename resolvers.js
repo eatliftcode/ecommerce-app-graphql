@@ -1,3 +1,5 @@
+
+
 export const resolvers = {
     Query: {
         products: (parent, args, context) => context.products,
@@ -7,12 +9,15 @@ export const resolvers = {
     },
     Product: {
         category: (parent, args, context)=> {
-            return context.categories.find(x => x.id = parent.id)
+            return context.categories.find(x => x.id === parent.id)
+        },
+        reviews: ({id}, args, {reviews}) =>{
+            return reviews.filter(review => review.productId === id)
         }
     },
     Category: {
         products: (parent, args, context)=> {
-            return context.products.filter(x => x.id = parent.id)
+            return context.products.filter(x => x.id === parent.id)
         }
     }
 }
